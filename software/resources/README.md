@@ -3,7 +3,7 @@ title: "UNIT Magnetometer BMM150 Module"
 version: "1.0"
 modified: "2025-05-19"
 output: "bmm150_module"
-subtitle: "A passive buzzer module is a sound-generating device that produces tones when controlled by a PWM signal from a microcontroller."
+subtitle: "BMM150 Magnetometer Module integrates the advanced BMM150 sensor to offer a compact and efficient magnetic field sensing solution."
 ---
 
 <!--
