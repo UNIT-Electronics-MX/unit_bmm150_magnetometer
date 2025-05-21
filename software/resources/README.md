@@ -2,7 +2,7 @@
 title: "UNIT Magnetometer BMM150 Module"
 version: "1.0"
 modified: "2025-05-19"
-output: "bmm150_module"
+output: "bmm150_magnetometer"
 subtitle: "BMM150 Magnetometer Module integrates the advanced BMM150 sensor to offer a compact and efficient magnetic field sensing solution."
 ---
 

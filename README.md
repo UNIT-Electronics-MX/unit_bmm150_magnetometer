@@ -1,6 +1,5 @@
 # Magnetometer BMM150
 
-## Introduction
 The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designed for accurate orientation sensing, electronic compass applications, and inertial navigation. Its versatile I²C and SPI interfaces ensure easy integration with popular platforms such as Arduino, ESP32, and Raspberry Pi.
 
 <div align="center">
@@ -61,3 +60,12 @@ Include the sensor initialization and configuration routines in your main projec
 
 ## Support
 For any issues or further assistance, please open an issue on the GitHub repository or contact our support team.
+
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Resources
+
+- [Product brief](./bmm150_magnetometer.pdf)
+- [Schematic](./hardware/UE0089-SCH-BMM150-001-T.pdf)
