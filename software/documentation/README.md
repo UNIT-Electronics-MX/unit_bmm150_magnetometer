@@ -1,4 +1,27 @@
-unctional Description
+---
+title: "BMM150 Magnetometer Module"
+version: "1.0"
+modified: "2025-05-28"
+output: "bmm150_magnetometer_module"
+subtitle: "Compact 3-axis digital magnetometer for orientation sensing and navigation applications"
+---
+
+<!--
+# README_TEMPLATE.md
+Este archivo sirve como entrada para generar un PDF técnico estilo datasheet.
+Edita las secciones respetando el orden, sin eliminar los encabezados.
+-->
+ <!-- logo -->
+
+# BMM150 Magnetometer Module
+
+![product](./images/product.jpg)
+
+## Introduction
+
+The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designed for accurate orientation sensing, electronic compass applications, and inertial navigation. Its versatile I²C and SPI interfaces ensure easy integration with popular platforms such as Arduino, ESP32, and Raspberry Pi.
+
+## Functional Description
 
 The BMM150 measures the magnetic field in three perpendicular axes (X, Y, Z), allowing precise heading calculation in static and dynamic environments. It compensates for soft and hard iron distortions and can be used in combination with an accelerometer and gyroscope for sensor fusion applications (e.g., 9DoF IMU).
 
