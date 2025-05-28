@@ -23,6 +23,8 @@ The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designe
 
 ## Functional Description
 
+
+
 The BMM150 measures the magnetic field in three perpendicular axes (X, Y, Z), allowing precise heading calculation in static and dynamic environments. It compensates for soft and hard iron distortions and can be used in combination with an accelerometer and gyroscope for sensor fusion applications (e.g., 9DoF IMU).
 
 - Measurement Range: ±1300 µT (X, Y axis), ±2500 µT (Z axis)
