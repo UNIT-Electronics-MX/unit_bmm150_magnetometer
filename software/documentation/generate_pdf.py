@@ -4,6 +4,8 @@ import re
 import subprocess
 import markdown2
 import yaml
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 
 def markdown_table_to_latex(md_table):
@@ -89,12 +91,18 @@ def format_images_with_titles(content):
             f"\\section*{{{title}}}\n"
             "\\vspace{1em}\n"
             "\\begin{center}\n"
-            f"\\includegraphics[width=0.85\\textwidth,keepaspectratio]{{{path}}}\n"
+            f"\\includegraphics[width=0.75\\textwidth,keepaspectratio]{{{path}}}\n"
             "\\end{center}\n"
         )
     return code
 
 def parse_readme_md(path):
+
+        # Obtener fecha local en Ciudad de México
+    cdmx_now = datetime.now(ZoneInfo("America/Mexico_City"))
+    formatted_date = cdmx_now.strftime("%Y-%m-%d %H:%M")
+
+
     with open(path, 'r', encoding='utf-8') as f:
         content = f.read()
 
@@ -104,9 +112,6 @@ def parse_readme_md(path):
     frontmatter = yaml.safe_load(frontmatter_match.group(1)) if frontmatter_match else {}
     content = re.sub(r'^---.*?---\s*', '', content, flags=re.DOTALL)
 
-    # image_paths = re.findall(r'!\[.*?\]\((.*?)\)', content)
-    # image_product = next((img for img in image_paths if "product" in img.lower()), "")
-    # other_images = [img for img in image_paths if img != image_product]
 
     image_matches = re.findall(r'!\[(.*?)\]\((.*?)\)', content)
     image_product = next((path for alt, path in image_matches if "product" in alt.lower()), "")
@@ -123,11 +128,14 @@ def parse_readme_md(path):
     downloads = re.findall(r'- \[(.*?)\]\((.*?)\)', content)
     downloads_latex = "\\n".join([f"\\item \\href{{{link}}}{{{text}}}" for text, link in downloads])
 
+    date_used = frontmatter.get("modified", formatted_date)
+
     data = {
         "LOGO": frontmatter.get("logo", "images/logo_unit.png"),
         "TITLE": frontmatter.get("title", "Untitled"),
         "VERSION": frontmatter.get("version", "v1.0"),
-        "DATE": frontmatter.get("modified", "Unknown"),
+        "DATE": formatted_date,
+
         "SUBTITLE": frontmatter.get("subtitle", "Product Brief"),
         "INTRODUCTION": fix_paragraphs(extract_section("Introduction", content)),
 
@@ -148,6 +156,7 @@ def parse_readme_md(path):
         "IMAGE_PRODUCT": image_product,
         "OUTPUT_NAME": frontmatter.get("output", "generated_product_brief"),
     }
+    
 
     # Agregar tablas personalizadas después de definir 'data'
     custom_tables = {
@@ -172,25 +181,26 @@ def render_latex(template_path, output_path, replacements):
     with open(output_path, 'w', encoding='utf-8') as f:
         f.write(tex)
 
+        
 def compile_pdf(tex_file):
     try:
         for _ in range(2):
             result = subprocess.run(
                 ['pdflatex', '-interaction=nonstopmode', '-output-directory=build', tex_file],
                 capture_output=True,
-                text=True
+                text=True,
+                encoding='utf-8',
+                errors='replace'  # <- esta línea soluciona el problema
             )
             if result.returncode != 0:
                 print("⚠️ LaTeX compiló con errores:")
                 print(result.stdout)
                 print(result.stderr)
-                # aún así intentamos seguir si el PDF fue generado
                 if not os.path.exists("build/" + os.path.splitext(os.path.basename(tex_file))[0] + ".pdf"):
                     raise subprocess.CalledProcessError(result.returncode, result.args)
     except subprocess.CalledProcessError as e:
         print(f"❌ LaTeX falló con código {e.returncode}")
         raise
-
 
 
 def clean_aux_files(output_name):
