@@ -1,13 +1,21 @@
 # Hardware
 
+<div align="center">
+
 <a href="#"><img src="resources/Schematics_icon.jpg" width="450px"><br/> Schematic</a>
+
+</div>
 
 ## Pinout
 
-<a href="#"><img src="resources/bmm150_PINOUT.jpg" width="500px"><br/> Pinout</a>
+<div align="center">
+
+<a href="#"><img src="resources/unit_pinout_v_1_0_ue0066_bmm150_en.jpg" width="500px"><br/> Pinout</a>
+</div>
 
 ### Description
 
+<div align="center">
 
 | Pin   | Signal     | Description                                                  |
 |:-----:|:-----------|:-------------------------------------------------------------|
@@ -20,10 +28,14 @@
 | PS    | PS         | Protocol select (LOW=I²C, HIGH=SPI)                          |
 | DRDY  | DRDY       | Data-Ready flag (new data available)                         |
 | INT   | INT        | Programmable interrupt output (e.g. threshold, flip-over)    |
+</div>
 
 ---
 
-
 ## Dimensions
 
-<a href="#"><img src="hardware/resources/bmp_top.jpg" width="450px"><br/> Dimensions</a>
+<div align="center">
+
+<a href="#"><img src="resources/unit_dimension_v_0_0_1_ue0066_bmm150.png" width="450px"><br/> Dimensions</a>
+
+</div>
