@@ -141,7 +141,6 @@ def parse_readme_md(path):
 
         "FUNCTIONAL": fix_linebreaks_for_lists(extract_section("Functional Description", content)),
         "ELECTRICAL": fix_linebreaks_for_lists(extract_section("Electrical Characteristics & Signal Overview", content)),
-        "FEATURES": fix_linebreaks_for_lists(extract_section("Features", content)),
         "APPLICATIONS": fix_linebreaks_for_lists(extract_section("Applications", content)),
 
         "PIN_TABLE": extract_table("Pin & Connector Layout", content),

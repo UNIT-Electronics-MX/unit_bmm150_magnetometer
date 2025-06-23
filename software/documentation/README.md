@@ -19,7 +19,7 @@ Edita las secciones respetando el orden, sin eliminar los encabezados.
 
 ## Introduction
 
-The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designed for accurate orientation sensing, electronic compass applications, and inertial navigation. Its versatile I²C and SPI interfaces ensure easy integration with popular platforms such as Arduino, ESP32, and Raspberry Pi.
+The BMM150 is a compact, ultra-low-power 3-axis digital magnetometer designed for accurate orientation sensing, electronic compass applications, and inertial navigation. Its versatile I²C and SPI interfaces ensure easy integration with popular platforms such as Arduino, ESP32, and Raspberry Pi. Based on Bosch Sensortec's advanced technology, the BMM150 provides high precision and low power consumption, making it ideal for wearable devices, drones, and robotics.
 
 ## Functional Description
 
@@ -34,11 +34,11 @@ The BMM150 measures the magnetic field in three perpendicular axes (X, Y, Z), al
 
 ## Electrical Characteristics & Signal Overview
 
-- Operating Voltage: 1.8V – 3.6V
+- Operating Voltage: 1.8V to 3.6V
 - Interface Logic Level: 3.3V
-- Typical Current Consumption: 170 µA in normal mode
-- Standby Current: <1 µA
-- Interface: I²C / SPI (selectable via hardware)
+- Typical Current Consumption: 170 µA during normal mode
+- Standby Current: Below 1 µA to minimize battery drain and enhance energy efficiency
+- Communication Interfaces: I²C and SPI (hardware selectable)
 
 ## Applications
 
@@ -48,13 +48,6 @@ The BMM150 measures the magnetic field in three perpendicular axes (X, Y, Z), al
 - Navigation systems (GNSS enhancement)
 - Wearable tracking devices
 
-## Features
-
-- 3-axis magnetic field sensing
-- Low power consumption for battery-operated devices
-- Fast startup time
-- Integrated self-test and temperature sensor
-- Fully calibrated digital output
 
 ## Pin & Connector Layout
 
