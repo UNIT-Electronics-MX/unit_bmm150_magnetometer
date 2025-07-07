@@ -36,7 +36,7 @@
 
 <div align="center">
 
-<a href="#"><img src="resources/unit_dimension_v_0_0_1_ue0066_bmm150.png" width="450px"><br/> Dimensions</a>
+<a href="resources/unit_dimension_v_0_0_1_ue0066_bmm150.png"><img src="resources/unit_dimension_v_0_0_1_ue0066_bmm150.png" width="450px"><br/> Dimensions</a>
 
 </div>
 
@@ -44,7 +44,7 @@
 
 <div align="center">
 
-<a href="#"><img src="./resources/unit_topology_v_0_0_1_ue0066_bmm150.png" width="450px"><br/> Dimensions</a>
+<a href="./resources/unit_topology_v_0_0_1_ue0066_bmm150.png"><img src="./resources/unit_topology_v_0_0_1_ue0066_bmm150.png" width="450px"><br/> Topology</a>
 
 </div>
 
