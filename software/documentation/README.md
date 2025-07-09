@@ -15,7 +15,7 @@ Edita las secciones respetando el orden, sin eliminar los encabezados.
 
 # BMM150 Magnetometer Module
 
-![product](./images/top.png)
+![product](../../hardware/resources/product.png)
 
 ## Introduction
 
@@ -83,11 +83,11 @@ The BMM150 measures the magnetic field in three perpendicular axes (X, Y, Z), al
 
 ## Block Diagram
 
-![Function Diagram](images/pinout.png)
+![Function Diagram](../../hardware/resources/unit_pinout_v_0_0_2_ue0066_bmm150_en.png)
 
 ## Dimensions
 
-![Dimensions](images/dimension.png)
+![Dimensions](../../hardware/resources/unit_dimension_v_0_0_1_ue0066_bmm150.png)
 
 ## Usage
 

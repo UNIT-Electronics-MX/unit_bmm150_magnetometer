@@ -10,7 +10,7 @@
 
 <div align="center">
 
-<a href="#"><img src="resources/unit_pinout_v_1_0_ue0066_bmm150_en.jpg" width="500px"><br/> Pinout</a>
+<a href="#"><img src="resources/unit_pinout_v_0_0_2_ue0066_bmm150_en.jpg" width="500px"><br/> Pinout</a>
 </div>
 
 ### Description
