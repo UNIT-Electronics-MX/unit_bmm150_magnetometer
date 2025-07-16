@@ -15,7 +15,7 @@ Edita las secciones respetando el orden, sin eliminar los encabezados.
 
 # BMM150 Magnetometer Module
 
-![product](../../hardware/resources/product.png)
+![product](../../hardware/resources/unit_top_v_0_0_1_ue0066_bmm150.png)
 
 ## Introduction
 
