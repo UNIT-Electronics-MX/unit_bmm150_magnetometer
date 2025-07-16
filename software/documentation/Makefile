@@ -1,56 +1,46 @@
 # Makefile para generación de hojas de datos
-# Método optimizado con generate_professional_pdf.py únicamente
+# Usando el script general de back/documentation
 
-.PHONY: all professional pdf clean help install install-minimal
+.PHONY: all pdf clean help install professional
 
 # Variables
 README = README.md
 BUILD_DIR = build
+BACK_DOC_PATH = ../../../../back/documentation
+PYTHON_VENV = ../../../../.venv/bin/python
 
-# Comando por defecto - versión profesional optimizada
-all: professional
+# Comando por defecto
+all: pdf
 
-# Método PROFESIONAL optimizado (único método disponible)
+# Generar PDF usando el script general
+pdf:
+	@echo "📄 Generando hoja de datos con script general..."
+	@mkdir -p $(BUILD_DIR)
+	@cd $(BACK_DOC_PATH) && $(PYTHON_VENV) generate_pdf.py $(CURDIR)/$(README)
+	@if [ -f build/*.pdf ]; then \
+		echo "✅ PDF generado en build/"; \
+	else \
+		echo "❌ Error: No se encontró el PDF generado"; \
+	fi
+
+# Método PROFESIONAL (mantener compatibilidad)
 professional:
 	@echo "🏆 Generando hoja de datos PROFESIONAL..."
 	@mkdir -p $(BUILD_DIR)
 	@python generate_professional_pdf.py
 	@echo "✅ Listo! Calidad profesional con imágenes de hardware/resources/"
 
-# Generar PDF directamente con Chrome
-pdf:
-	@echo "📄 Generando PDF con Chrome..."
-	@mkdir -p $(BUILD_DIR)
-	@python generate_professional_pdf.py
-	@if command -v google-chrome-stable >/dev/null 2>&1; then \
-		echo "🔧 Convirtiendo HTML a PDF con Chrome..."; \
-		cd $(BUILD_DIR) && google-chrome-stable --headless --disable-gpu --print-to-pdf=datasheet.pdf --no-margins --print-to-pdf-no-header datasheet_professional.html; \
-		echo "✅ PDF generado: $(BUILD_DIR)/datasheet.pdf"; \
-	elif command -v chromium-browser >/dev/null 2>&1; then \
-		echo "🔧 Convirtiendo HTML a PDF con Chromium..."; \
-		cd $(BUILD_DIR) && chromium-browser --headless --disable-gpu --print-to-pdf=datasheet.pdf --no-margins --print-to-pdf-no-header datasheet_professional.html; \
-		echo "✅ PDF generado: $(BUILD_DIR)/datasheet.pdf"; \
-	else \
-		echo "⚠️ Chrome/Chromium no encontrado. Solo HTML disponible."; \
-		echo "📄 HTML disponible: $(BUILD_DIR)/datasheet_professional.html"; \
-	fi
-
-# Instalar dependencias mínimas
+# Instalar dependencias
 install:
-	@echo "📦 Instalando dependencias mínimas..."
+	@echo "📦 Instalando dependencias..."
 	@pip install -r requirements.txt
-	@echo "✅ Dependencias instaladas (markdown2, PyYAML, Pillow)"
+	@echo "✅ Dependencias instaladas"
 
 # Limpiar archivos generados
 clean:
 	@echo "🧹 Limpiando archivos generados..."
 	@rm -rf $(BUILD_DIR)
 	@echo "✅ Limpieza completada"
-
-# Generar y abrir automáticamente
-open: professional
-	@echo "🌐 Abriendo hoja de datos profesional..."
-	@python -c "import webbrowser, os; webbrowser.open('file://' + os.path.abspath('build/datasheet_professional.html'))"
 
 # Verificar que README.md existe
 check:
@@ -62,25 +52,16 @@ check:
 
 # Mostrar información de ayuda
 help:
-	@echo "🛠️ GENERADOR DE HOJAS DE DATOS - OPTIMIZADO"
-	@echo "==========================================="
+	@echo "🛠️ GENERADOR DE HOJAS DE DATOS"
+	@echo "=============================="
 	@echo ""
 	@echo "Comandos disponibles:"
-	@echo "  make professional    - Genera hoja PROFESIONAL (HTML) ⭐"
-	@echo "  make pdf             - Genera hoja + PDF con Chrome"
-	@echo "  make open            - Genera y abre en navegador"
-	@echo "  make install         - Instala dependencias mínimas"
+	@echo "  make pdf             - Genera PDF usando script general (SIN sección adicional)"
+	@echo "  make professional    - Genera hoja PROFESIONAL (CON sección adicional)"
+	@echo "  make install         - Instala dependencias"
 	@echo "  make clean           - Limpia archivos generados"
 	@echo "  make check           - Verifica que README.md existe"
 	@echo "  make help            - Muestra esta ayuda"
 	@echo ""
-	@echo "⭐ RECOMENDADO:"
-	@echo "  make professional    (ultra-rápido, < 0.1 segundos)"
-	@echo ""
-	@echo "🚀 Características:"
-	@echo "  - Solo 3 dependencias Python"
-	@echo "  - Sin Sphinx, sin LaTeX"
-	@echo "  - Imágenes automáticas desde hardware/"
-	@echo "  - Escalado uniforme TOP/BOTTOM view"
-	@echo "  - Saltos de página optimizados"
-	@echo "  - Compatible con GitHub Pages"
+	@echo "⭐ RECOMENDADO para evitar 'ADDITIONAL PRODUCT DOCUMENTATION':"
+	@echo "  make pdf"

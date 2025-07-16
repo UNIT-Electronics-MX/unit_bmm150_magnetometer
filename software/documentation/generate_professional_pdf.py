@@ -17,8 +17,33 @@ from zoneinfo import ZoneInfo
 class ProfessionalDatasheetGenerator:
     def __init__(self):
         self.css_professional = self.get_professional_css()
-        self.hardware_path = "../../hardware/resources"
         self.base_path = os.path.dirname(os.path.abspath(__file__))
+        
+        # Buscar automáticamente la carpeta de hardware en múltiples ubicaciones
+        self.hardware_path = self.find_hardware_directory()
+        
+    def find_hardware_directory(self):
+        """Encuentra automáticamente el directorio de hardware"""
+        possible_paths = [
+            "../../hardware/resources",  # Estructura estándar
+            "../../hardware",            # Carpeta hardware directa
+            "../hardware/resources",     # Un nivel menos
+            "../hardware",               # Un nivel menos, directa
+            "./hardware/resources",      # Mismo nivel
+            "./hardware",                # Mismo nivel, directa
+            "../../../hardware/resources",  # Dos niveles arriba
+            "../../../hardware"          # Dos niveles arriba, directa
+        ]
+        
+        for path in possible_paths:
+            abs_path = os.path.abspath(os.path.join(self.base_path, path))
+            if os.path.exists(abs_path):
+                print(f"📁 Hardware directory found: {abs_path}")
+                return path
+        
+        # Si no encuentra ninguna, usar la ruta estándar
+        print(f"⚠️ Hardware directory not found, using default: ../../hardware/resources")
+        return "../../hardware/resources"
         
     def get_professional_css(self):
         """CSS profesional para documentación técnica comercial"""
@@ -1125,6 +1150,48 @@ class ProfessionalDatasheetGenerator:
             margin: 0 auto;
         }
         
+        /* PDF placeholder styles */
+        .pdf-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            background: #f8f9fa;
+            border: 2px dashed #6c757d;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+        
+        .pdf-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .pdf-text {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        
+        .pdf-link {
+            background: #007bff;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+        
+        .pdf-link:hover {
+            background: #0056b3;
+            color: white;
+        }
+        }
+        
         /* IMAGE CONTAINERS */
         .pinout-container, .dimensions-container {
             text-align: center;
@@ -1523,7 +1590,8 @@ class ProfessionalDatasheetGenerator:
                         images['unit_pinout'] = file
                 elif any(pattern in file_lower for pattern in ['dimension', 'dimensions', 'size', 'mechanical']):
                     images['unit_dimensions'] = file
-                elif any(pattern in file_lower for pattern in ['sch', 'schematic', 'circuit']) and '.pdf' not in file_lower:
+                elif any(pattern in file_lower for pattern in ['sch', 'schematic', 'circuit']):
+                    # Detectar esquemáticos tanto en imagen como en PDF
                     images['unit_schematic'] = file
         
         
@@ -1702,7 +1770,7 @@ class ProfessionalDatasheetGenerator:
                         shutil.copy2(source_path, dest_path)
                         print(f"📋 Copied {image_file} to build/")
         
-        # Copiar PDFs de esquemáticos
+        # Copiar PDFs de esquemáticos desde hardware/resources
         if os.path.exists(hardware_abs_path):
             for file in os.listdir(hardware_abs_path):
                 if 'sch' in file.lower() and file.lower().endswith('.pdf'):
@@ -1710,6 +1778,16 @@ class ProfessionalDatasheetGenerator:
                     dest_path = os.path.join(build_dir, file)
                     shutil.copy2(source_path, dest_path)
                     print(f"📋 Copied schematic PDF {file} to build/")
+        
+        # Copiar PDFs de esquemáticos desde hardware/ (directorio padre)
+        hardware_parent_path = os.path.dirname(hardware_abs_path)
+        if os.path.exists(hardware_parent_path):
+            for file in os.listdir(hardware_parent_path):
+                if 'sch' in file.lower() and file.lower().endswith('.pdf'):
+                    source_path = os.path.join(hardware_parent_path, file)
+                    dest_path = os.path.join(build_dir, file)
+                    shutil.copy2(source_path, dest_path)
+                    print(f"📋 Copied schematic PDF {file} from hardware/ to build/")
 
     def generate_professional_datasheet(self, readme_path, output_path):
         """Genera hoja de datos profesional completa"""
@@ -2013,11 +2091,22 @@ class ProfessionalDatasheetGenerator:
                         # Find schematic PDF file
                         schematic_pdf = None
                         hardware_abs_path = os.path.abspath(self.hardware_path)
+                        
+                        # Buscar en hardware/resources
                         if os.path.exists(hardware_abs_path):
                             for file in os.listdir(hardware_abs_path):
                                 if 'sch' in file.lower() and file.lower().endswith('.pdf'):
                                     schematic_pdf = file  # Solo usar el nombre del archivo
                                     break
+                        
+                        # Si no se encuentra, buscar en hardware/ (directorio padre)
+                        if not schematic_pdf:
+                            hardware_parent_path = os.path.dirname(hardware_abs_path)
+                            if os.path.exists(hardware_parent_path):
+                                for file in os.listdir(hardware_parent_path):
+                                    if 'sch' in file.lower() and file.lower().endswith('.pdf'):
+                                        schematic_pdf = file  # Solo usar el nombre del archivo
+                                        break
                         
                         html += f'''
                                     <div class="doc-card">
@@ -2049,79 +2138,93 @@ class ProfessionalDatasheetGenerator:
                                 </div>
                             </div>
                 '''
-            # ADDITIONAL PRODUCT DETAILS SECTION - Only include if there are additional images
-            hardware_path = os.path.abspath(self.hardware_path)
-            additional_images_found = []
+            # ADDITIONAL PRODUCT DETAILS SECTION - DISABLED TO AVOID CLUTTER
+            # hardware_path = os.path.abspath(self.hardware_path)
+            # additional_images_found = []
             
-            if os.path.exists(hardware_path):
-                for file in os.listdir(hardware_path):
-                    if file.lower().endswith(('.png', '.jpg', '.jpeg')):
-                        file_path = os.path.join(hardware_path, file)
-                        file_lower = file.lower()
-                        
-                        # Skip already displayed main images (flexible naming patterns)
-                        main_image_patterns = ['pinout', 'dimension', 'top', 'btm', 'bottom', 'topology']
-                        if any(pattern in file_lower for pattern in main_image_patterns):
-                            continue
-                        
-                        # Skip obvious non-product images
-                        skip_patterns = ['icon', 'logo', 'watermark', 'template']
-                        if any(pattern in file_lower for pattern in skip_patterns):
-                            continue
-                        
-                        additional_images_found.append((file_path, file))
+            # if os.path.exists(hardware_path):
+            #     for file in os.listdir(hardware_path):
+            #         if file.lower().endswith(('.png', '.jpg', '.jpeg', '.pdf')):
+            #             file_path = os.path.join(hardware_path, file)
+            #             file_lower = file.lower()
+            #             
+            #             # Skip already displayed main images (flexible naming patterns)
+            #             main_image_patterns = ['pinout', 'dimension', 'top', 'btm', 'bottom', 'topology', 'sch', 'schematic', 'circuit']
+            #             if any(pattern in file_lower for pattern in main_image_patterns):
+            #                 continue
+            #             
+            #             # Skip obvious non-product images
+            #             skip_patterns = ['icon', 'logo', 'watermark', 'template']
+            #             if any(pattern in file_lower for pattern in skip_patterns):
+            #                 continue
+            #             
+            #             additional_images_found.append((file, file))
             
             # Only create section if we have additional images
-            if additional_images_found:
-                html += '''
-                            <div class="product-details-section">
-                                <div class="section-header">ADDITIONAL PRODUCT DOCUMENTATION</div>
-                                <div class="product-details-grid">
-                '''
-                
-                # Display additional images with smart categorization
-                for file_path, filename in additional_images_found:
-                    file_lower = filename.lower()
-                    
-                    # Smart categorization based on filename patterns (product-agnostic)
-                    if any(x in file_lower for x in ['sch', 'schematic', 'circuit']):
-                        title = "CIRCUIT SCHEMATIC"
-                        description = "Detailed circuit diagram and component layout"
-                    elif any(x in file_lower for x in ['pcb', 'board', 'layout']):
-                        title = "PCB LAYOUT"
-                        description = "Printed circuit board design and routing"
-                    elif any(x in file_lower for x in ['assembly', 'mounting', 'install']):
-                        title = "ASSEMBLY GUIDE"
-                        description = "Installation and mounting instructions"
-                    elif any(x in file_lower for x in ['connection', 'wire', 'cable']):
-                        title = "CONNECTION DIAGRAM"
-                        description = "Wiring and connection examples"
-                    elif any(x in file_lower for x in ['size', 'scale', 'comparison']):
-                        title = "SIZE REFERENCE"
-                        description = "Physical size comparison and scale"
-                    elif any(x in file_lower for x in ['detail', 'close', 'zoom']):
-                        title = "DETAIL VIEW"
-                        description = "Close-up component details"
-                    elif any(x in file_lower for x in ['package', 'box', 'kit']):
-                        title = "PACKAGING"
-                        description = "Product packaging and contents"
-                    else:
-                        # Generic fallback for any other technical image
-                        title = "TECHNICAL REFERENCE"
-                        description = "Additional product documentation"
-                    
-                    html += f'''
-                        <div class="detail-card">
-                            <div class="detail-title">{title}</div>
-                            <img src="{file_path}" alt="{title}" class="detail-image">
-                            <div class="detail-caption">{description}</div>
-                        </div>
-                    '''
-                
-                html += '''
-                                </div>
-                            </div>
-                '''
+            # if additional_images_found:
+            #     html += '''
+            #                 <div class="product-details-section">
+            #                     <div class="section-header">ADDITIONAL PRODUCT DOCUMENTATION</div>
+            #                     <div class="product-details-grid">
+            #     '''
+            #     
+            #     # Display additional images with smart categorization
+            #     for file_path, filename in additional_images_found:
+            #         file_lower = filename.lower()
+            #         
+            #         # Smart categorization based on filename patterns (product-agnostic)
+            #         if any(x in file_lower for x in ['sch', 'schematic', 'circuit']):
+            #             title = "CIRCUIT SCHEMATIC"
+            #             description = "Detailed circuit diagram and component layout"
+            #         elif any(x in file_lower for x in ['pcb', 'board', 'layout']):
+            #             title = "PCB LAYOUT"
+            #             description = "Printed circuit board design and routing"
+            #         elif any(x in file_lower for x in ['assembly', 'mounting', 'install']):
+            #             title = "ASSEMBLY GUIDE"
+            #             description = "Installation and mounting instructions"
+            #         elif any(x in file_lower for x in ['connection', 'wire', 'cable']):
+            #             title = "CONNECTION DIAGRAM"
+            #             description = "Wiring and connection examples"
+            #         elif any(x in file_lower for x in ['size', 'scale', 'comparison']):
+            #             title = "SIZE REFERENCE"
+            #             description = "Physical size comparison and scale"
+            #         elif any(x in file_lower for x in ['detail', 'close', 'zoom']):
+            #             title = "DETAIL VIEW"
+            #             description = "Close-up component details"
+            #         elif any(x in file_lower for x in ['package', 'box', 'kit']):
+            #             title = "PACKAGING"
+            #             description = "Product packaging and contents"
+            #         else:
+            #             # Generic fallback for any other technical image
+            #             title = "TECHNICAL REFERENCE"
+            #             description = "Additional product documentation"
+            #         
+            #         # Handle both images and PDFs differently
+            #         if filename.lower().endswith('.pdf'):
+            #             html += f'''
+            #                 <div class="detail-card">
+            #                     <div class="detail-title">{title}</div>
+            #                     <div class="pdf-placeholder">
+            #                         <div class="pdf-icon">📄</div>
+            #                         <div class="pdf-text">PDF Document</div>
+            #                         <a href="{filename}" target="_blank" class="pdf-link">View {title}</a>
+            #                     </div>
+            #                     <div class="detail-caption">{description}</div>
+            #                 </div>
+            #             '''
+            #         else:
+            #             html += f'''
+            #                 <div class="detail-card">
+            #                     <div class="detail-title">{title}</div>
+            #                     <img src="{filename}" alt="{title}" class="detail-image">
+            #                     <div class="detail-caption">{description}</div>
+            #                 </div>
+            #             '''
+            #     
+            #     html += '''
+            #                     </div>
+            #                 </div>
+            #     '''
             
             # Close images section
             html += '''

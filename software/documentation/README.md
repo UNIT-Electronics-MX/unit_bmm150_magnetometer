@@ -93,17 +93,10 @@ The BMM150 measures the magnetic field in three perpendicular axes (X, Y, Z), al
 
 Compatible with:
 
-- Arduino UNO / Nano
-- ESP32 / ESP8266
-- Raspberry Pi / RP2040 boards
-- STM32, CH32V, and other I²C/SPI capable MCUs
+- ESP32
+- [Buy from UNIT Electronics](https://www.uelectronics.com)
 
 ## Downloads
 
-- [Datasheet - BMM150 (Bosch)](https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmm150-ds000.pdf)
-- [Example Code - Arduino](docs/bmm150_arduino_example.zip)
-- [Schematic PDF](docs/schematic.pdf)
+- 
 
-## Purchase
-
-- [Buy from UNIT Electronics](https://www.uelectronics.com)
