@@ -10,6 +10,17 @@ The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designe
 </div>
 
 
+## Additional Resources
+
+<div align="center">
+
+| Resource | Link |
+|:--------:|:----:|
+| Github Repository | [Github Repository](https://github.com/UNIT-Electronics-MX/unit_bmm150_magnetometer) |
+| Product Brief | [Product brief](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/datasheet_professional.html) |
+| Schematic | [Schematic](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/unit_sch_V_0_0_1_ue0066_bmm150_magnetometro.pdf) |
+
+</div>
 
 ## Key Features
 - **Axes:** 3 (X, Y, Z)
@@ -50,8 +61,3 @@ For any issues or further assistance, please open an issue on the GitHub reposit
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Resources
-
-- [Wiki-Uelectronics](https://unit-electronics-mx.github.io/wiki_uelectronics/docs/Sensors/bmm150)
-- [Product brief](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/datasheet_professional.html)
-- [Schematic](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/unit_sch_V_0_0_1_ue0066_bmm150_magnetometro.pdf)
