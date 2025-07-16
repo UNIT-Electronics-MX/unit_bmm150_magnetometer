@@ -1,0 +1,91 @@
+name: 🚀 Build Professional Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'software/documentation/**'
+      - 'hardware/**'
+      - 'README.md'
+      - '.github/workflows/build_docs.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'software/documentation/**'
+      - 'hardware/**'
+      - 'README.md'
+
+permissions:
+  contents: write
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-22.04
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        cd software/documentation
+        pip install -r requirements.txt
+
+    - name: Install Chrome
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget gnupg
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /usr/share/keyrings/googlechrome-linux-keyring.gpg
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/googlechrome-linux-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+
+    - name: Generate professional documentation
+      run: |
+        cd software/documentation
+        python generate_professional_pdf.py
+        echo "✅ Professional documentation generated"
+
+    - name: Prepare docs directory
+      run: |
+        # Create docs directory if it doesn't exist
+        mkdir -p docs
+        
+        # Copy ALL generated files from build/ to docs/
+        if [ -d "software/documentation/build" ]; then
+          # Copy all files from build directory
+          cp software/documentation/build/* docs/ 2>/dev/null || echo "Some files might not exist"
+          echo "✅ All build files copied"
+          
+          # Copy images directory if it exists
+          if [ -d "software/documentation/build/images" ]; then
+            cp -r software/documentation/build/images docs/
+            echo "✅ Images directory copied"
+          fi
+        fi
+        
+        # Create simple index.html redirect
+        echo "<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>Documentation</title><meta http-equiv=\"refresh\" content=\"0; url=datasheet_professional.html\"></head><body><p>Redirecting...</p></body></html>" > docs/index.html
+        
+        # GitHub Pages setup
+        touch docs/.nojekyll
+
+    - name: Deploy to repository
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        git config --local user.name "github-actions[bot]"
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        
+        git add docs/
+        if ! git diff --staged --quiet; then
+          git commit -m "Deploy documentation [skip ci]"
+          git push origin main
+        fi
