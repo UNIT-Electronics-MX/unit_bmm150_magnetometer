@@ -94,6 +94,7 @@ The BMM150 measures the magnetic field in three perpendicular axes (X, Y, Z), al
 Compatible with:
 
 - ESP32
+- [UNIT-Electronics-MX Repository](https://github.com/UNIT-Electronics-MX)
 - [Buy from UNIT Electronics](https://www.uelectronics.com)
 
 ## Downloads
