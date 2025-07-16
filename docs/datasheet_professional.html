@@ -1108,6 +1108,48 @@
             margin: 0 auto;
         }
         
+        /* PDF placeholder styles */
+        .pdf-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            background: #f8f9fa;
+            border: 2px dashed #6c757d;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 250px;
+            margin: 0 auto;
+        }
+        
+        .pdf-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .pdf-text {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 8px;
+        }
+        
+        .pdf-link {
+            background: #007bff;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 12px;
+            transition: background-color 0.3s;
+        }
+        
+        .pdf-link:hover {
+            background: #0056b3;
+            color: white;
+        }
+        }
+        
         /* IMAGE CONTAINERS */
         .pinout-container, .dimensions-container {
             text-align: center;
@@ -1635,21 +1677,14 @@
                                         <img src="Schematics_icon.jpg" alt="Circuit Schematic" class="topology-image">
                                         <div class="doc-caption">Detailed circuit schematic diagram</div>
                         
+                                        <div class="doc-link">
+                                            <a href="unit_sch_V_0_0_1_ue0066_bmm150_magnetometro.pdf" target="_blank" class="schematic-link">
+                                                📄 View Complete Schematic PDF
+                                            </a>
+                                        </div>
+                            
                                     </div>
                         
-                                </div>
-                            </div>
-                
-                            <div class="product-details-section">
-                                <div class="section-header">ADDITIONAL PRODUCT DOCUMENTATION</div>
-                                <div class="product-details-grid">
-                
-                        <div class="detail-card">
-                            <div class="detail-title">TECHNICAL REFERENCE</div>
-                            <img src="/home/runner/work/unit_bmm150_magnetometer/unit_bmm150_magnetometer/hardware/resources/product.png" alt="TECHNICAL REFERENCE" class="detail-image">
-                            <div class="detail-caption">Additional product documentation</div>
-                        </div>
-                    
                                 </div>
                             </div>
                 
@@ -1666,10 +1701,8 @@
                             <p style="margin: 10px 0; color: #374151;">Compatible with:</p>
 <p style="margin: 10px 0; color: #374151;"></p>
 <ul style="margin: 10px 0; padding-left: 20px;">
-<li style="color: #374151; font-size: 11pt;">Arduino UNO / Nano</li>
-<li style="color: #374151; font-size: 11pt;">ESP32 / ESP8266</li>
-<li style="color: #374151; font-size: 11pt;">Raspberry Pi / RP2040 boards</li>
-<li style="color: #374151; font-size: 11pt;">STM32, CH32V, and other I²C/SPI capable MCUs</li>
+<li style="color: #374151; font-size: 11pt;">ESP32</li>
+<li style="color: #374151; font-size: 11pt;"><a href="https://www.uelectronics.com" target="_blank" style="color: #374151; text-decoration: underline;">Buy from UNIT Electronics</a></li>
 </ul>
                         </div>
                     </div>
@@ -1677,11 +1710,7 @@
                     <div class="section">
                         <h2 class="section-title">Downloads</h2>
                         <div class="section-content">
-                            <ul style="margin: 10px 0; padding-left: 20px;">
-<li style="color: #374151; font-size: 11pt;"><a href="https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmm150-ds000.pdf" target="_blank" style="color: #374151; text-decoration: underline;">Datasheet - BMM150 (Bosch)</a></li>
-<li style="color: #374151; font-size: 11pt;"><a href="docs/bmm150_arduino_example.zip" target="_blank" style="color: #374151; text-decoration: underline;">Example Code - Arduino</a></li>
-<li style="color: #374151; font-size: 11pt;"><a href="docs/schematic.pdf" target="_blank" style="color: #374151; text-decoration: underline;">Schematic PDF</a></li>
-</ul>
+                            <p style="margin: 10px 0; color: #374151;">-</p>
                         </div>
                     </div>
                 
@@ -1720,7 +1749,7 @@
             </div>
             
             <script>
-                document.title = 'TECHNICAL REFERENCE_Professional_Datasheet_v1.0_2025-07-16';
+                document.title = 'Circuit Schematic_Professional_Datasheet_v1.0_2025-07-16';
                 
                 // Enhanced print function
                 function printDatasheet() {
