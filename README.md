@@ -42,20 +42,6 @@ The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designe
 ### Overview
 This repository contains firmware and documentation for integrating the BMM150 magnetometer into your project. The examples provided demonstrate sensor configuration, data acquisition, and interfacing via both I²C and SPI.
 
-### Installation
-1. Clone the repository:
-   ```
-   git clone git@github.com:UNIT-Electronics-MX/unit_bmm150_magnetometer.git
-   ```
-2. Navigate to the project directory:
-   ```
-   cd ./unit_bmm150_magnetometer
-   ```
-3. Follow the platform-specific setup instructions detailed in the project documentation.
-
-### Usage
-Include the sensor initialization and configuration routines in your main project file. Sample code snippets and detailed explanations can be found in the documentation folder of the repository.
-
 
 ## Support
 For any issues or further assistance, please open an issue on the GitHub repository or contact our support team.
@@ -66,5 +52,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Resources
 
-- [Product brief](./bmm150_magnetometer.pdf)
-- [Schematic](./hardware/UE0089-SCH-BMM150-001-T.pdf)
+- [Wiki-Uelectronics](https://unit-electronics-mx.github.io/wiki_uelectronics/docs/Sensors/bmm150)
+- [Product brief](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/datasheet_professional.html)
+- [Schematic](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/unit_sch_V_0_0_1_ue0066_bmm150_magnetometro.pdf)
