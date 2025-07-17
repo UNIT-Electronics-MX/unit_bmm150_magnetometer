@@ -355,9 +355,9 @@ class ProfessionalDatasheetGenerator:
             border-radius: 0 8px 8px 0;
         }
         
-        /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - Force page break */
+        /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - No page break */
         .additional-sections {
-            page-break-before: always !important;
+            page-break-before: avoid !important;
             page-break-inside: avoid !important;
             margin: 20px 0;
             min-height: 100px;
@@ -675,11 +675,41 @@ class ProfessionalDatasheetGenerator:
                 page-break-after: avoid;
             }
             
-            /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - Nueva página */
+            /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - No page break */
             .additional-sections {
-                page-break-before: always;
+                page-break-before: avoid;
                 page-break-inside: avoid;
                 margin: 5mm 0;
+            }
+            
+            /* TOPOLOGY SECTION - LARGE IMAGE */
+            .topology-section {
+                page-break-inside: avoid;
+                page-break-before: auto;
+                margin: 5mm 0;
+                padding: 5mm;
+            }
+            
+            .topology-image-large {
+                max-width: 170mm !important;
+                height: auto;
+                padding: 3mm;
+                margin: 3mm auto;
+            }
+            
+            /* SCHEMATIC SECTION - PAGE BREAK */
+            .schematic-section {
+                page-break-before: always !important;
+                page-break-inside: avoid;
+                margin: 5mm 0;
+                padding: 5mm;
+            }
+            
+            .schematic-image {
+                max-width: 80mm !important;
+                height: auto;
+                padding: 3mm;
+                margin: 3mm auto;
             }
             
             .features-grid, .applications-grid {
@@ -961,7 +991,14 @@ class ProfessionalDatasheetGenerator:
             }
             
             .topology-image {
-                max-width: 80mm;
+                max-width: 120mm !important;
+                height: auto;
+            }
+            
+            /* Preserve links in PDF */
+            .image-link {
+                display: inline-block !important;
+                text-decoration: none !important;
             }
             
             .product-details-section {
@@ -1128,7 +1165,7 @@ class ProfessionalDatasheetGenerator:
         
         .topology-image {
             width: 100%;
-            max-width: 450px;
+            max-width: 650px;
             height: auto;
             object-fit: contain;
             border-radius: 6px;
@@ -1136,6 +1173,86 @@ class ProfessionalDatasheetGenerator:
             padding: 8px;
             display: block;
             margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .topology-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Estilo para enlaces de imágenes */
+        .image-link {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+        }
+        
+        .image-link:hover .topology-image {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* TOPOLOGY SECTION - STANDALONE WITH LARGE IMAGE */
+        .topology-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+        
+        .topology-image-large {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 15px;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .topology-image-large:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* SCHEMATIC SECTION - STANDALONE WITH PAGE BREAK */
+        .schematic-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            page-break-before: always;
+            page-break-inside: avoid;
+        }
+        
+        .schematic-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 15px;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .schematic-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
         
         .detail-image {
@@ -1497,20 +1614,21 @@ class ProfessionalDatasheetGenerator:
             display: inline-block;
             background: #374151;
             color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: 8px;
             text-decoration: none;
-            font-size: 9pt;
-            font-weight: 500;
+            font-size: 12pt;
+            font-weight: 600;
             transition: all 0.3s ease;
             border: 2px solid #374151;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .schematic-link:hover {
             background: white;
             color: #374151;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         """
     def parse_readme(self, readme_path):
@@ -2071,69 +2189,72 @@ class ProfessionalDatasheetGenerator:
                                 </div>
                             </div>
                 '''
-            # Additional Technical Documentation - Only if available
-            additional_images = []
+            # Topology Section - Standalone with large image
             if images['unit_topology']:
-                additional_images.append(('unit_topology', 'System Topology', 'Connection topology and system integration'))
-            if images['unit_schematic']:
-                additional_images.append(('unit_schematic', 'Circuit Schematic', 'Detailed circuit schematic diagram'))
-                
-            if additional_images:
-                html += '''
-                            <div class="additional-docs-section">
-                                <div class="section-header">SUPPLEMENTARY TECHNICAL DOCUMENTATION</div>
-                                <div class="additional-docs-grid">
+                html += f'''
+                            <div class="topology-section">
+                                <div class="section-header">SYSTEM TOPOLOGY</div>
+                                <div style="text-align: center;">
+                                    <a href="{images['unit_topology']}" target="_blank" class="image-link">
+                                        <img src="{images['unit_topology']}" alt="System Topology" class="topology-image-large">
+                                    </a>
+                                    <div class="doc-caption" style="margin-top: 15px; font-size: 12pt;">
+                                        Connection topology and system integration diagram
+                                    </div>
+                                    <div class="doc-caption" style="font-size: 10pt; color: #6b7280; margin-top: 8px;">
+                                        <em>Click image to open in full size</em>
+                                    </div>
+                                </div>
+                            </div>
                 '''
+            
+            # Schematic Section - Standalone with page break and PDF link
+            if images['unit_schematic']:
+                # Find schematic PDF file
+                schematic_pdf = None
+                hardware_abs_path = os.path.abspath(self.hardware_path)
                 
-                for img_key, title, description in additional_images:
-                    # Special handling for schematic with PDF link
-                    if img_key == 'unit_schematic':
-                        # Find schematic PDF file
-                        schematic_pdf = None
-                        hardware_abs_path = os.path.abspath(self.hardware_path)
-                        
-                        # Buscar en hardware/resources
-                        if os.path.exists(hardware_abs_path):
-                            for file in os.listdir(hardware_abs_path):
-                                if 'sch' in file.lower() and file.lower().endswith('.pdf'):
-                                    schematic_pdf = file  # Solo usar el nombre del archivo
-                                    break
-                        
-                        # Si no se encuentra, buscar en hardware/ (directorio padre)
-                        if not schematic_pdf:
-                            hardware_parent_path = os.path.dirname(hardware_abs_path)
-                            if os.path.exists(hardware_parent_path):
-                                for file in os.listdir(hardware_parent_path):
-                                    if 'sch' in file.lower() and file.lower().endswith('.pdf'):
-                                        schematic_pdf = file  # Solo usar el nombre del archivo
-                                        break
-                        
-                        html += f'''
-                                    <div class="doc-card">
-                                        <div class="doc-title">{title.upper()}</div>
-                                        <img src="{images[img_key]}" alt="{title}" class="topology-image">
-                                        <div class="doc-caption">{description}</div>
-                        '''
-                        if schematic_pdf:
-                            html += f'''
-                                        <div class="doc-link">
-                                            <a href="{schematic_pdf}" target="_blank" class="schematic-link">
-                                                📄 View Complete Schematic PDF
-                                            </a>
+                # Buscar en hardware/resources
+                if os.path.exists(hardware_abs_path):
+                    for file in os.listdir(hardware_abs_path):
+                        if 'sch' in file.lower() and file.lower().endswith('.pdf'):
+                            schematic_pdf = file  # Solo usar el nombre del archivo
+                            break
+                
+                # Si no se encuentra, buscar en hardware/ (directorio padre)
+                if not schematic_pdf:
+                    hardware_parent_path = os.path.dirname(hardware_abs_path)
+                    if os.path.exists(hardware_parent_path):
+                        for file in os.listdir(hardware_parent_path):
+                            if 'sch' in file.lower() and file.lower().endswith('.pdf'):
+                                schematic_pdf = file  # Solo usar el nombre del archivo
+                                break
+                
+                html += f'''
+                            <div class="schematic-section">
+                                <div class="section-header">CIRCUIT SCHEMATIC</div>
+                                <div style="text-align: center;">
+                                    <div style="margin-bottom: 20px;">
+                                        <img src="{images['unit_schematic']}" alt="Circuit Schematic" class="schematic-image">
+                                        <div class="doc-caption" style="margin-top: 10px; font-size: 10pt; color: #6b7280;">
+                                            Schematic preview
                                         </div>
-                            '''
-                        html += '''
                                     </div>
-                        '''
-                    else:
-                        html += f'''
-                                    <div class="doc-card">
-                                        <div class="doc-title">{title.upper()}</div>
-                                        <img src="{images[img_key]}" alt="{title}" class="topology-image">
-                                        <div class="doc-caption">{description}</div>
+                '''
+                if schematic_pdf:
+                    html += f'''
+                                    <div class="doc-link" style="margin-top: 20px;">
+                                        <a href="{schematic_pdf}" target="_blank" class="schematic-link" style="font-size: 14pt; padding: 12px 20px;">
+                                            📄 View Complete Schematic PDF
+                                        </a>
                                     </div>
-                        '''
-                
+                    '''
+                else:
+                    html += '''
+                                    <div class="doc-caption" style="font-size: 10pt; color: #6b7280; margin-top: 8px;">
+                                        <em>Click image to open in full size</em>
+                                    </div>
+                    '''
                 html += '''
                                 </div>
                             </div>
