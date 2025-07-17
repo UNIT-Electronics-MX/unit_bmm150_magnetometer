@@ -3793,7 +3793,10 @@ class ProfessionalDatasheetGenerator:
         '''
         
         # Guardar archivo HTML
+
         html_path = output_path.replace('.pdf', '.html')
+        os.makedirs(os.path.dirname(html_path), exist_ok=True)
+
         with open(html_path, 'w', encoding='utf-8') as f:
             f.write(html)
         
