@@ -30,13 +30,15 @@ The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designe
 - **Resolution:** ~0.3 µT
 - **Power Consumption:** Ultra-low power consumption for battery-operated devices
 - **Interfaces:** I²C and SPI
-- **Supply Voltage:** 3.3 V
+- **Operating Voltage (VDD / VDDIO):** 3.3 V (regulated internal voltage for sensor operation)  
+- **Input Voltage via VCC Pin:** 3.6–6.0 V (through onboard voltage regulator)
 - **Operating Temperature:** Wide operating range suitable for various environments
 - **Additional Signals:**  
   - **DRDY** (Data Ready)  
   - **INT** (Programmable Interrupt)  
   - **SDO/ADDR** (I²C address select / SPI MISO)
 
+⚠️ Note: The VCC pin is connected to an onboard LDO voltage regulator. Supplying 3.3V directly to the 3V3 pin bypasses the regulator.
 
 ## Applications
 
