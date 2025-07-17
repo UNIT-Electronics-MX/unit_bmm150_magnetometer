@@ -313,9 +313,9 @@
             border-radius: 0 8px 8px 0;
         }
         
-        /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - Force page break */
+        /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - No page break */
         .additional-sections {
-            page-break-before: always !important;
+            page-break-before: avoid !important;
             page-break-inside: avoid !important;
             margin: 20px 0;
             min-height: 100px;
@@ -633,11 +633,41 @@
                 page-break-after: avoid;
             }
             
-            /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - Nueva página */
+            /* ADDITIONAL SECTIONS (USAGE, DOWNLOADS) - No page break */
             .additional-sections {
-                page-break-before: always;
+                page-break-before: avoid;
                 page-break-inside: avoid;
                 margin: 5mm 0;
+            }
+            
+            /* TOPOLOGY SECTION - LARGE IMAGE */
+            .topology-section {
+                page-break-inside: avoid;
+                page-break-before: auto;
+                margin: 5mm 0;
+                padding: 5mm;
+            }
+            
+            .topology-image-large {
+                max-width: 170mm !important;
+                height: auto;
+                padding: 3mm;
+                margin: 3mm auto;
+            }
+            
+            /* SCHEMATIC SECTION - PAGE BREAK */
+            .schematic-section {
+                page-break-before: always !important;
+                page-break-inside: avoid;
+                margin: 5mm 0;
+                padding: 5mm;
+            }
+            
+            .schematic-image {
+                max-width: 80mm !important;
+                height: auto;
+                padding: 3mm;
+                margin: 3mm auto;
             }
             
             .features-grid, .applications-grid {
@@ -919,7 +949,14 @@
             }
             
             .topology-image {
-                max-width: 80mm;
+                max-width: 120mm !important;
+                height: auto;
+            }
+            
+            /* Preserve links in PDF */
+            .image-link {
+                display: inline-block !important;
+                text-decoration: none !important;
             }
             
             .product-details-section {
@@ -1086,7 +1123,7 @@
         
         .topology-image {
             width: 100%;
-            max-width: 450px;
+            max-width: 650px;
             height: auto;
             object-fit: contain;
             border-radius: 6px;
@@ -1094,6 +1131,86 @@
             padding: 8px;
             display: block;
             margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .topology-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Estilo para enlaces de imágenes */
+        .image-link {
+            display: inline-block;
+            text-decoration: none;
+            border: none;
+        }
+        
+        .image-link:hover .topology-image {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* TOPOLOGY SECTION - STANDALONE WITH LARGE IMAGE */
+        .topology-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+        
+        .topology-image-large {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 15px;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .topology-image-large:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* SCHEMATIC SECTION - STANDALONE WITH PAGE BREAK */
+        .schematic-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            page-break-before: always;
+            page-break-inside: avoid;
+        }
+        
+        .schematic-image {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 15px;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .schematic-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
         
         .detail-image {
@@ -1455,20 +1572,21 @@
             display: inline-block;
             background: #374151;
             color: white;
-            padding: 8px 15px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: 8px;
             text-decoration: none;
-            font-size: 9pt;
-            font-weight: 500;
+            font-size: 12pt;
+            font-weight: 600;
             transition: all 0.3s ease;
             border: 2px solid #374151;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .schematic-link:hover {
             background: white;
             color: #374151;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         </style>
         </head>
@@ -1492,7 +1610,7 @@
                         </div>
                         <div class="version-section">
                             <div class="version-badge">v1.0</div>
-                            <div>2025-07-16</div>
+                            <div>2025-07-17</div>
                             <div>Rev. A</div>
                         </div>
                     </div>
@@ -1662,29 +1780,37 @@
                                 </div>
                             </div>
                 
-                            <div class="additional-docs-section">
-                                <div class="section-header">SUPPLEMENTARY TECHNICAL DOCUMENTATION</div>
-                                <div class="additional-docs-grid">
+                            <div class="topology-section">
+                                <div class="section-header">SYSTEM TOPOLOGY</div>
+                                <div style="text-align: center;">
+                                    <a href="unit_topology_v_0_0_1_ue0066_bmm150.png" target="_blank" class="image-link">
+                                        <img src="unit_topology_v_0_0_1_ue0066_bmm150.png" alt="System Topology" class="topology-image-large">
+                                    </a>
+                                    <div class="doc-caption" style="margin-top: 15px; font-size: 12pt;">
+                                        Connection topology and system integration diagram
+                                    </div>
+                                    <div class="doc-caption" style="font-size: 10pt; color: #6b7280; margin-top: 8px;">
+                                        <em>Click image to open in full size</em>
+                                    </div>
+                                </div>
+                            </div>
                 
-                                    <div class="doc-card">
-                                        <div class="doc-title">SYSTEM TOPOLOGY</div>
-                                        <img src="unit_topology_v_0_0_1_ue0066_bmm150.png" alt="System Topology" class="topology-image">
-                                        <div class="doc-caption">Connection topology and system integration</div>
-                                    </div>
-                        
-                                    <div class="doc-card">
-                                        <div class="doc-title">CIRCUIT SCHEMATIC</div>
-                                        <img src="Schematics_icon.jpg" alt="Circuit Schematic" class="topology-image">
-                                        <div class="doc-caption">Detailed circuit schematic diagram</div>
-                        
-                                        <div class="doc-link">
-                                            <a href="unit_sch_V_0_0_1_ue0066_bmm150_magnetometro.pdf" target="_blank" class="schematic-link">
-                                                📄 View Complete Schematic PDF
-                                            </a>
+                            <div class="schematic-section">
+                                <div class="section-header">CIRCUIT SCHEMATIC</div>
+                                <div style="text-align: center;">
+                                    <div style="margin-bottom: 20px;">
+                                        <img src="Schematics_icon.jpg" alt="Circuit Schematic" class="schematic-image">
+                                        <div class="doc-caption" style="margin-top: 10px; font-size: 10pt; color: #6b7280;">
+                                            Schematic preview
                                         </div>
-                            
                                     </div>
-                        
+                
+                                    <div class="doc-link" style="margin-top: 20px;">
+                                        <a href="unit_sch_V_0_0_1_ue0066_bmm150_magnetometro.pdf" target="_blank" class="schematic-link" style="font-size: 14pt; padding: 12px 20px;">
+                                            📄 View Complete Schematic PDF
+                                        </a>
+                                    </div>
+                    
                                 </div>
                             </div>
                 
@@ -1742,7 +1868,7 @@
                             <div>Professional Technical Datasheet</div>
                         </div>
                         <div class="footer-right">
-                            <div>Date: 2025-07-16</div>
+                            <div>Date: 2025-07-17</div>
                             <div>For commercial distribution</div>
                         </div>
                     </div>
@@ -1750,7 +1876,7 @@
             </div>
             
             <script>
-                document.title = 'Circuit Schematic_Professional_Datasheet_v1.0_2025-07-16';
+                document.title = 'BMM150 Magnetometer Module_Professional_Datasheet_v1.0_2025-07-17';
                 
                 // Enhanced print function
                 function printDatasheet() {
