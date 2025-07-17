@@ -6,16 +6,22 @@
 
 </div>
 
-## Pinout
+## Pinout Diagram
+
+<div align="center">
+
+<a href="#"><img src="resources/unit_pinout_v_0_0_2_ue0066_bmm150_en.jpg" width="500px"><br/> Pinout</a>
+</div>
+  - **SDO/ADDR** (I²C address select / SPI MISO)
+
+## Power Three
 
 <div align="center">
 
 <a href="#"><img src="resources/unit_pinout_v_0_0_2_ue0066_bmm150_en.jpg" width="500px"><br/> Pinout</a>
 </div>
 
-### Description
-
-<div align="center">
+## Pinout Description
 
 | Pin   | Signal     | Description                                                  |
 |:-----:|:-----------|:-------------------------------------------------------------|
@@ -28,9 +34,7 @@
 | PS    | PS         | Protocol select (LOW=I²C, HIGH=SPI)                          |
 | DRDY  | DRDY       | Data-Ready flag (new data available)                         |
 | INT   | INT        | Programmable interrupt output (e.g. threshold, flip-over)    |
-</div>
 
----
 
 ## Dimensions
 
@@ -64,4 +68,3 @@
 
 </div>
 
----

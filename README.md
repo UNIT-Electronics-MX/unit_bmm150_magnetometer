@@ -1,13 +1,18 @@
 # Magnetometer BMM150
 
-The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designed for accurate orientation sensing, electronic compass applications, and inertial navigation. Its versatile I²C and SPI interfaces ensure easy integration with popular platforms such as Arduino, ESP32, and Raspberry Pi.
 
-<div align="center">
-  <a href="https://unit-electronics-mx.github.io/wiki_uelectronics/docs/Sensors/bmm150" target="_blank">
-    <img src="hardware/resources/product.png" width="400px" alt="Magnetometer BMM150"><br/>
-    Magnetometer BMM150
-  </a>
-</div>
+## Introduction
+
+The BMM150 is a triaxial digital geomagnetic sensor optimized for low-power, high-precision applications. Engineered by Bosch Sensortec, it provides absolute magnetic field measurements along the X, Y, and Z axes, suitable for electronic compassing and inertial navigation tasks.
+
+The device integrates seamlessly via I²C or SPI, ensuring compatibility with a wide range of host controllers, including Arduino, ESP32, and Raspberry Pi. Its compact form factor and minimal power profile make it ideal for space- and energy-constrained systems such as wearables, mobile robotics, and UAVs.
+
+Built-in compensation algorithms correct soft-iron and hard-iron distortions, supporting reliable heading estimation in real-world environments. When used in conjunction with accelerometers and gyroscopes, the BMM150 enables robust 9DoF sensor fusion for advanced motion tracking and orientation systems.
+
+
+
+<div align="center"> <a href="https://unit-electronics-mx.github.io/wiki_uelectronics/docs/Sensors/bmm150" target="_blank"> <img src="hardware/resources/product.png" width="400px" alt="Magnetometer BMM150"><br/> Magnetometer BMM150 </a> </div>
+
 
 
 ## Additional Resources
@@ -21,8 +26,10 @@ The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designe
 | Product Brief | [Product brief](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/datasheet_professional.html) |
 | Schematic | [Schematic](https://unit-electronics-mx.github.io/unit_bmm150_magnetometer/unit_sch_V_0_0_1_ue0066_bmm150_magnetometro.pdf) |
 
-
 </div>
+
+
+
 
 ## Key Features
 - **Axes:** 3 (X, Y, Z)
@@ -30,13 +37,13 @@ The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designe
 - **Resolution:** ~0.3 µT
 - **Power Consumption:** Ultra-low power consumption for battery-operated devices
 - **Interfaces:** I²C and SPI
+<<<<<<< HEAD
 - **Operating Voltage (VDD / VDDIO):** 3.3 V (regulated internal voltage for sensor operation)  
 - **Input Voltage via VCC Pin:** 3.6–6.0 V (through onboard voltage regulator)
 - **Operating Temperature:** Wide operating range suitable for various environments
 - **Additional Signals:**  
   - **DRDY** (Data Ready)  
   - **INT** (Programmable Interrupt)  
-  - **SDO/ADDR** (I²C address select / SPI MISO)
 
 ⚠️ Note: The VCC pin is connected to an onboard LDO voltage regulator. Supplying 3.3V directly to the 3V3 pin bypasses the regulator.
 
@@ -52,10 +59,10 @@ The **BMM150** is a compact, ultra-low-power 3-axis digital magnetometer designe
 | Wearables and Portable Devices        | Enhances personal navigation in smartwatches, fitness trackers, and other portable devices.        |
 | Indoor Geolocation                    | Improves indoor positioning accuracy by compensating for sensor drift and interference.          |
 
-## Documentation and Setup
 
-### Overview
-This repository contains firmware and documentation for integrating the BMM150 magnetometer into your project. The examples provided demonstrate sensor configuration, data acquisition, and interfacing via both I²C and SPI.
+
+
+## Documentation and Setup
 
 
 ## Support
