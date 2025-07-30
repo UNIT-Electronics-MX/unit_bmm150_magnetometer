@@ -32,6 +32,7 @@ Built-in compensation algorithms correct soft-iron and hard-iron distortions, su
 
 
 ## Key Features
+
 - **Axes:** 3 (X, Y, Z)
 - **Measurement Range:** ±1300 µT
 - **Resolution:** ~0.3 µT
