@@ -1,4 +1,4 @@
-# Magnetometer BMM150
+# DevLab: I2C BMM150 Magnetometer Sensor
 
 
 ## Introduction
